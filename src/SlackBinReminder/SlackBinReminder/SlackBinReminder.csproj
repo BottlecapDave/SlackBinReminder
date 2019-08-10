@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>SlackBinReminder</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="BinReminder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SlackAPI" Version="1.1.1" />
+    <PackageReference Include="SouthGloucestershireBinCollection" Version="0.1.0-alpha" />
+  </ItemGroup>
+
+</Project>
