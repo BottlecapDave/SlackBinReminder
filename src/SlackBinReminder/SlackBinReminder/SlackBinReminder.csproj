@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SlackAPI" Version="1.1.1" />
-    <PackageReference Include="SouthGloucestershireBinCollection" Version="0.1.0-alpha" />
+    <PackageReference Include="SouthGloucestershireBinCollection" Version="0.2.1-alpha" />
   </ItemGroup>
 
 </Project>

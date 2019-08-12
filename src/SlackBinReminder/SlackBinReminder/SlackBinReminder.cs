@@ -38,9 +38,9 @@ namespace SlackBinReminder
             {
                 var builder = new StringBuilder();
                 builder.AppendLine("@channel Testing bin reminder");
-                builder.AppendLine(String.Format("Refuse - {0}", collectionDates.C1));
-                builder.AppendLine(String.Format("Garden - {0}", collectionDates.G1));
-                builder.AppendLine(String.Format("Recycling - {0}", collectionDates.R1));
+                builder.AppendLine(String.Format("*Refuse* - {0}", collectionDates.Refuse1));
+                builder.AppendLine(String.Format("*Garden* - {0}", collectionDates.GardenWaste1));
+                builder.AppendLine(String.Format("*Recycling* - {0}", collectionDates.Recycling1));
 
                 await this.SendSlackMessageAsync(builder.ToString());
             }
@@ -121,24 +121,26 @@ namespace SlackBinReminder
         private IReadOnlyList<string> GetCollectedTypes(DateTime targetDate, CollectionDates collectionDates)
         {
             var typesBeingCollected = new List<string>();
-            if (collectionDates.C1.HasValue &&
-                collectionDates.C1.Value.Date == targetDate.Date)
+            if (collectionDates.Recycling1.HasValue &&
+                collectionDates.Recycling1.Value.Date == targetDate.Date)
             {
-                typesBeingCollected.Add("Refuse");
+                typesBeingCollected.Add("*Recycling*");
+                typesBeingCollected.Add("*Food Waste*");
             }
 
-            if (collectionDates.G1.HasValue &&
-                collectionDates.G1.Value.Date == targetDate.Date)
+            if (collectionDates.Refuse1.HasValue &&
+                collectionDates.Refuse1.Value.Date == targetDate.Date)
             {
-                typesBeingCollected.Add("Garden Waste");
+                typesBeingCollected.Add("*Refuse*");
             }
 
-            if (collectionDates.R1.HasValue &&
-                collectionDates.R1.Value.Date == targetDate.Date)
+            if (collectionDates.GardenWaste1.HasValue &&
+                collectionDates.GardenWaste1.Value.Date == targetDate.Date)
             {
-                typesBeingCollected.Add("Recycling");
-                typesBeingCollected.Add("Food Waste");
+                typesBeingCollected.Add("*Garden Waste*");
             }
+
+            
 
             return typesBeingCollected;
         }
