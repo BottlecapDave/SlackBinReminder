@@ -1,10 +1,22 @@
 # Slack Bin Reminder
-This code base houses the logic for issuing bin collection reminders from my local council via Slack integration. It is split into two parts:
+This is an `AWS Lambda` which sends reminders for bin collections from South Gloucestershire Council to a configured Slack account.
 
-The main logic utilises [SouthGloucestershireBinCollections](https://github.com/BottlecapDave/SGC-Bin-Collection) and [SlackAPI](https://github.com/Inumedia/SlackAPI).
+The main logic for getting the bin collection dates is from [SouthGloucestershireBinCollections](https://github.com/BottlecapDave/SGC-Bin-Collection) and the Slack integration is achieved using [SlackAPI](https://github.com/Inumedia/SlackAPI).
 
-The second part is an AWS Lambda which is run on a daily schedule, with the ability to issue reminders on the day before or the day of the collection.
+I have the `AWS Lambda` configured to execute on a daily schedule using a `CloudWatch` CRON job.
 
 ## Build
 
 Currently this is built and deployed via Visual Studio and the AWS SDK.
+
+## Usage
+
+The AWS Lambda takes the following environment variables
+
+| Environment Variable  | Description |
+|-----------------------|-------------|
+| SLACK_API_TOKEN       | The API token for the Slack Bot that the reminders will be sent as |
+| TARGET_SLACK_CHANNEL  | The channel that the reminder should be sent to. This is the channel name without the `#` |
+| HOUSE_NUMBER          | The house number/first line of address of the house that the reminders are for |
+| POSTCODE              | The postcode of the house that the reminders are for |
+| REMINDER_TARGET       | The type of reminder to send; `tomorrow` - send the reminder if any bins are being collected the next day; `today` - send the reminder if any bins are being collected today; `test` - send a test reminder detailing the next date each bin type is being collected | 
