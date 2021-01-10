@@ -2,3 +2,4 @@ src/SlackBinReminder/.vs/
 src/SlackBinReminder/SlackBinReminder.Lambda/aws-lambda-tools-defaults.json
 bin
 obj
+out/

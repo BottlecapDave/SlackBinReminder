@@ -9,8 +9,9 @@
     <Compile Remove="BinReminder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Bottlecap.SouthGloucestershireBinCollection" Version="0.3.0-alpha" />
+    <PackageReference Include="RestSharp" Version="106.6.10" />
     <PackageReference Include="SlackAPI" Version="1.1.1" />
-    <PackageReference Include="SouthGloucestershireBinCollection" Version="0.2.1-alpha" />
   </ItemGroup>
 
 </Project>

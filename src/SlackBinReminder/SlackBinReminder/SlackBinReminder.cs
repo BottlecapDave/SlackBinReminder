@@ -1,11 +1,11 @@
 ﻿using SlackAPI;
-using SouthGloucestershireBinCollection;
+using Bottlecap.SouthGloucestershireBinCollection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
+using RestSharp;
 
 namespace SlackBinReminder
 {
@@ -14,8 +14,9 @@ namespace SlackBinReminder
         private ILogger _logger;
         private string _slackApiToken;
         private string _targetChannel;
+        private string _adjustmentDatesUrl;
 
-        public SlackBinReminder(ILogger logger, string slackApiToken, string targetChannel)
+        public SlackBinReminder(ILogger logger, string slackApiToken, string targetChannel, string adjustmentDatesUrl)
         {
             if (String.IsNullOrEmpty(slackApiToken))
             {
@@ -29,6 +30,7 @@ namespace SlackBinReminder
             _logger = logger;
             _slackApiToken = slackApiToken;
             _targetChannel = targetChannel;
+            _adjustmentDatesUrl = adjustmentDatesUrl;
         }
 
         public async Task RemindTestAsync(string houseNumber, string postcode)
@@ -156,6 +158,22 @@ namespace SlackBinReminder
                 throw new ArgumentException(nameof(postcode));
             }
 
+            List<DateAdjustment> adjustmentDates;
+            if (String.IsNullOrEmpty(_adjustmentDatesUrl) == false)
+            {
+                var client = new RestClient(_adjustmentDatesUrl);
+                client.AddHandler("application/json", () => UKJsonSerializer.Default);
+
+                var request = new RestRequest();
+                request.AddHeader("Content-Type", "application/json");
+
+                adjustmentDates = await client.GetAsync<List<DateAdjustment>>(request);
+            }
+            else
+            {
+                adjustmentDates = new List<DateAdjustment>();
+            }
+
             var binCollection = new SouthGloucestershireBinCollections();
             var addresses = await binCollection.GetAddressesAsync(new Address()
             {
@@ -170,7 +188,7 @@ namespace SlackBinReminder
 
             var targetAddress = addresses.FirstOrDefault();
 
-            var collections = await binCollection.GetCollectionDatesAsync(targetAddress.Uprn);
+            var collections = await binCollection.GetCollectionDatesAsync(targetAddress.Uprn, adjustmentDates);
             if (collections == null)
             {
                 await this.SendSlackMessageAsync("Unable to find bin collection dates");
