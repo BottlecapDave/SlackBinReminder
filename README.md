@@ -20,3 +20,4 @@ The AWS Lambda takes the following environment variables
 | HOUSE_NUMBER          | The house number/first line of address of the house that the reminders are for |
 | POSTCODE              | The postcode of the house that the reminders are for |
 | REMINDER_TARGET       | The type of reminder to send; `tomorrow` - send the reminder if any bins are being collected the next day; `today` - send the reminder if any bins are being collected today; `test` - send a test reminder detailing the next date each bin type is being collected | 
+| ADJUSTMENT_DATES_URL  | The url to download adjustment dates to apply to any retrieved collection dates. This is used to solve SGC not updating their dates for events like christmas. The content must be a list in JSON format with "originalDate" and "newDate" fields. |
