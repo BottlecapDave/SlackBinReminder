@@ -7,7 +7,12 @@ I have the `AWS Lambda` configured to execute on a daily schedule using a `Cloud
 
 ## Build
 
-Currently this is built and deployed via Visual Studio and the AWS SDK.
+Currently this is built and deployed via Visual Studio.
+
+```
+build.cmd
+# Zip contents of ./out and upload to AWS.
+```
 
 ## Usage
 
