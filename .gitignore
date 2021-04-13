@@ -3,3 +3,4 @@ src/SlackBinReminder/SlackBinReminder.Lambda/aws-lambda-tools-defaults.json
 bin
 obj
 out/
+launchSettings.json
