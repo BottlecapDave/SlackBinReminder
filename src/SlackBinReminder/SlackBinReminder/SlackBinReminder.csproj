@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Bottlecap.SouthGloucestershireBinCollection" Version="0.4.0-alpha" />
     <PackageReference Include="RestSharp" Version="106.6.10" />
-    <PackageReference Include="SlackAPI" Version="1.1.1" />
+    <PackageReference Include="SlackAPI" Version="1.1.12" />
   </ItemGroup>
 
 </Project>

@@ -184,16 +184,9 @@ namespace SlackBinReminder
         private async Task SendSlackMessageAsync(string message)
         {
             var client = new SlackTaskClient(_slackApiToken);
-            var channels = await client.GetChannelListAsync();
-            var c = channels.channels.FirstOrDefault(x => x.name.Equals(_targetChannel));
-            if (c == null)
-            {
-                _logger.Log("Failed to get slack hub for {0}", _targetChannel);
-                throw new InvalidOperationException();
-            }
-
             _logger.Log("Sending message '{0}'", message);
-            await client.PostMessageAsync(c.id, message, linkNames: true, as_user: true);
+            var response = await client.PostMessageAsync(_targetChannel, message, linkNames: true, as_user: true);
+            response.AssertOk();
         }
     }
 }
